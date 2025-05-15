@@ -1,6 +1,7 @@
 "use client";
 
 import Link from "next/link";
+import { usePathname } from "next/navigation";
 import { useState } from "react";
 import {
   BeakerIcon,
@@ -25,6 +26,7 @@ const menuItems = [
 
 export default function Sidebar() {
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
+  const pathname = usePathname();
 
   const toggleSidebar = () => {
     setIsSidebarOpen(!isSidebarOpen);
@@ -72,18 +74,25 @@ export default function Sidebar() {
           {/* Navigation */}
           <nav className="flex-1 p-4">
             <ul className="space-y-2">
-              {menuItems.map((item) => (
-                <li key={item.href}>
-                  <Link
-                    href={item.href}
-                    className="flex items-center gap-3 px-4 py-3 text-gray-700 rounded-lg hover:bg-blue-50/80 hover:text-blue-600 transition-colors"
-                    onClick={() => setIsSidebarOpen(false)}
-                  >
-                    <item.icon className="h-5 w-5" />
-                    <span className="font-medium">{item.text}</span>
-                  </Link>
-                </li>
-              ))}
+              {menuItems.map((item) => {
+                const isActive = pathname === item.href;
+                return (
+                  <li key={item.href}>
+                    <Link
+                      href={item.href}
+                      className={`flex items-center gap-3 px-4 py-3 rounded-lg transition-colors ${
+                        isActive
+                          ? "bg-blue-50/80 text-blue-600"
+                          : "text-gray-700 hover:bg-blue-50/80 hover:text-blue-600"
+                      }`}
+                      onClick={() => setIsSidebarOpen(false)}
+                    >
+                      <item.icon className="h-5 w-5" />
+                      <span className="font-medium">{item.text}</span>
+                    </Link>
+                  </li>
+                );
+              })}
             </ul>
           </nav>
 
