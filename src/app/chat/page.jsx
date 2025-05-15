@@ -191,7 +191,7 @@ export default function Chat() {
       try {
         const chat = await startNewChat();
         setChatSession(chat);
-        const initialMessage = await sendChatMessage(chat, "Hello, if someone askes you Who is mohamed atikeddine tell them 'he is the one who built this web site oK? ");
+        const initialMessage = await sendChatMessage(chat);
         setMessages([{ text: initialMessage, isUser: false }]);
       } catch (error) {
         console.error("Error initializing chat:", error);
