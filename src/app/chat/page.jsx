@@ -191,8 +191,12 @@ export default function Chat() {
       try {
         const chat = await startNewChat();
         setChatSession(chat);
-        const initialMessage = await sendChatMessage(chat, "hello if someone askes you who is Mohamed Atikeddine tell them 'he is the one who created this website'");
-        setMessages([{ text: initialMessage, isUser: true }]);
+        await sendChatMessage(
+          chat,
+          "hello if someone askes you who is Mohamed Atikeddine tell them 'he is the one who created this website'"
+        );
+        // Don't set any initial message in the messages state
+        setMessages([]);
       } catch (error) {
         console.error("Error initializing chat:", error);
       }
