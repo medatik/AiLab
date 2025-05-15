@@ -6,7 +6,26 @@ import {
   SparklesIcon,
   BookOpenIcon,
   DocumentTextIcon,
+  BookmarkIcon,
+  BookmarkSquareIcon,
 } from "@heroicons/react/24/solid";
+
+const storyLengthOptions = [
+  {
+    id: "short",
+    name: "Short Story",
+    description: "100-150 words",
+    icon: BookmarkIcon,
+    color: "text-green-600",
+  },
+  {
+    id: "long",
+    name: "Long Story",
+    description: "20-30 lines",
+    icon: BookmarkSquareIcon,
+    color: "text-blue-600",
+  },
+];
 
 export default function StoryGenerator() {
   const [prompt, setPrompt] = useState("");
@@ -77,47 +96,34 @@ export default function StoryGenerator() {
                 Story Length
               </label>
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                <label className="relative flex items-center justify-between p-4 rounded-xl bg-gray-50 border border-gray-200 cursor-pointer hover:bg-gray-100 transition-all duration-200">
-                  <div className="flex items-center">
+                {storyLengthOptions.map((option) => (
+                  <label
+                    key={option.id}
+                    className={`relative flex items-center p-4 rounded-xl bg-gray-50 border border-gray-200 cursor-pointer hover:bg-gray-100 transition-all duration-200 ${
+                      storyLength === option.id ? "ring-2 ring-blue-500" : ""
+                    }`}
+                  >
                     <input
                       type="radio"
                       name="storyLength"
-                      value="short"
-                      checked={storyLength === "short"}
+                      value={option.id}
+                      checked={storyLength === option.id}
                       onChange={(e) => setStoryLength(e.target.value)}
-                      className="form-radio h-4 w-4 text-blue-600 border-gray-300 focus:ring-blue-500"
+                      className="sr-only"
                     />
-                    <div className="ml-4">
-                      <span className="block text-gray-800 font-medium">
-                        Short Story
-                      </span>
-                      <span className="block text-sm text-gray-500">
-                        100-150 words
-                      </span>
+                    <div className="flex items-center gap-3">
+                      <option.icon className={`h-5 w-5 ${option.color}`} />
+                      <div>
+                        <span className="block text-gray-800 font-medium">
+                          {option.name}
+                        </span>
+                        <span className="block text-sm text-gray-500">
+                          {option.description}
+                        </span>
+                      </div>
                     </div>
-                  </div>
-                </label>
-
-                <label className="relative flex items-center justify-between p-4 rounded-xl bg-gray-50 border border-gray-200 cursor-pointer hover:bg-gray-100 transition-all duration-200">
-                  <div className="flex items-center">
-                    <input
-                      type="radio"
-                      name="storyLength"
-                      value="long"
-                      checked={storyLength === "long"}
-                      onChange={(e) => setStoryLength(e.target.value)}
-                      className="form-radio h-4 w-4 text-blue-600 border-gray-300 focus:ring-blue-500"
-                    />
-                    <div className="ml-4">
-                      <span className="block text-gray-800 font-medium">
-                        Long Story
-                      </span>
-                      <span className="block text-sm text-gray-500">
-                        20-30 lines
-                      </span>
-                    </div>
-                  </div>
-                </label>
+                  </label>
+                ))}
               </div>
             </div>
 
